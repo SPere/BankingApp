@@ -1,0 +1,33 @@
+<h3>Balance Information</h3>
+<div *ngIf="!selectedUser">
+    Please select a user to see their balance, withdraw or deposit money into their account
+</div>
+<div *ngIf="selectedUser">
+    <div class="mb-3">
+        <label class="col-2">Selected user is:</label>
+        {{selectedUser.name}}
+    </div>
+     
+    <div *ngIf="(balance$ | async) as balance" >
+        <div class="mb-3">
+            <label class="col-2">Balance is:</label>
+             {{balance.amount | json}} {{balance.currency.code}}
+        </div>
+        <div class="mb-3">
+            <label class="col-2" for="withdraw">Withdraw amount:</label>
+            <input class="col-8" id="withdraw" [formControl]="withdrawAmount" number>
+            <button class="col-2" click="withdraw()" >Withdraw</button>
+        </div>
+        <div class="input-group mb-3">
+            <label class="col-2" for="deposit">Deposit amount:</label>
+            <div class="col-8" [formGroup]="depositAmount" >
+                <input class="col-8" id="deposit" formControlName="amount" number>
+                <select class="col-4 pt-1 pb-1" formControlName="currencyCode">
+                    <option *ngFor="let currency of currencies$ | async" [ngValue]="currency.code">{{currency.code}}</option>
+                </select>
+            </div>
+            <button class="col-2" >Deposit</button>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,13 @@
+<h3>Users</h3>
+<div *ngIf="!(users$| async)" >
+    Loading ...
+</div>
+<div *ngIf="(users$| async) as users" >
+    <nav class="nav flex-column nav-pills">
+        <a *ngFor="let user of users" 
+            class="nav-link" 
+            [ngClass]="{'active': user === selectedUser }" 
+            (click)="selectUser(user)">{{user.name}}</a>
+    </nav>    
+</div>
+
